@@ -24,6 +24,6 @@ public interface PokeDAO {
     @Query("SELECT * FROM POKEMON")
     public List<Pokemon> zwrocpokemonyzbazy();
     @Query("SELECT nazwa FROM POKEMON where generacja=:generacjaparametr")
-    public List<Pokemon> zwrocpokemonyzbazygeneracja(int generacjaparametr);
+    public List<String> zwrocpokemonyzbazygeneracja(int generacjaparametr);
 
 }
