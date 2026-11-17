@@ -1,5 +1,11 @@
 package com.lusia.zrobtosamfajer;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,7 +25,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
     Button buttondadaj;
     Button buttonaktual;
@@ -31,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     ArrayAdapter<Pokemon> arrayAdapter;
     List<Pokemon> pokemony;
+    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         editText2 = findViewById(R.id.editTextNumber);
         editText3 = findViewById(R.id.editTextText2);
         czyforma = findViewById(R.id.checkBox);
+
         buttondadaj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,9 +77,36 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Pokemon pokemondousuniencia = pokemony.get(i);
+                pokeDataBase.zwrocpokemonyDao().usunpokemonazbazy(pokemondousuniencia);
+                pokemony.remove(i);
+                arrayAdapter.notifyDataSetChanged();
                 return false;
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                kliknientypokemon = pokemony.get(i);
+                editText.setText(kliknientypokemon.getNazwa());
+                editText2.setText(String.valueOf(kliknientypokemon.getGeneracja()));
+                editText3.setText(kliknientypokemon.getTyp());
+                czyforma.setChecked(kliknientypokemon.isFormaczynie());
+                buttonaktual.setVisibility(VISIBLE);
+            }
+        });
+        buttonaktual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                kliknientypokemon.setNazwa(editText.getText().toString());
+                kliknientypokemon.setGeneracja(Integer.parseInt(editText2.getText().toString()));
+                kliknientypokemon.setTyp(editText3.getText().toString());
+                kliknientypokemon.setFormaczynie(czyforma.isChecked());
+                pokeDataBase.zwrocpokemonyDao().aktualizujpokemona(kliknientypokemon);
+                arrayAdapter.notifyDataSetChanged();
+                buttonaktual.setVisibility(GONE);
+            }
+        });
+
     }
 }
