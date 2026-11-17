@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -22,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     Button buttondadaj;
     Button buttonaktual;
     EditText editText;
+    EditText editText2;
+    EditText editText3;
+    CheckBox czyforma;
     Pokemon kliknientypokemon;
     PokeDataBase pokeDataBase;
     ListView listView;
@@ -45,10 +49,15 @@ public class MainActivity extends AppCompatActivity {
         buttonaktual = findViewById(R.id.button2);
         buttondadaj = findViewById(R.id.button);
         editText = findViewById(R.id.editTextText);
+        editText2 = findViewById(R.id.editTextNumber);
+        editText3 = findViewById(R.id.editTextText2);
+        czyforma = findViewById(R.id.checkBox);
         buttondadaj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Pokemon pokemon = new Pokemon(false,"najlepszy" ,9,editText.getText().toString());
+                Pokemon pokemon = new Pokemon(czyforma.isChecked(),editText3.getText().toString(),Integer.parseInt(editText2.getText().toString()),editText.getText().toString());
+
+                arrayAdapter.notifyDataSetChanged();
                 pokeDataBase.zwrocpokemonyDao().wstawpokemona(pokemon);
 
             }
@@ -64,6 +73,5 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        listView.setOnItemClickListener();
     }
 }
