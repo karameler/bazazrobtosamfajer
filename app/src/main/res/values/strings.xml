@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">zrobtosamfajer</string>
+    <string name="dialogczynapewno" />
+    <string name="start" />
+    <string name="cancel" />
+    <string name="ok" />
 </resources>

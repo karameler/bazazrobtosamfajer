@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment;
 public class Dialogerger extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialogczynapewno)
                 .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {

@@ -1,5 +1,6 @@
 package com.lusia.zrobtosamfajer;
 
+import static android.app.PendingIntent.getActivity;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 Pokemon pokemondousuniencia = pokemony.get(i);
                 pokeDataBase.zwrocpokemonyDao().usunpokemonazbazy(pokemondousuniencia);
                 pokemony.remove(i);
